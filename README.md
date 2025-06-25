@@ -12,6 +12,18 @@ This system implements a completely isolated payment processing environment with
 - ✅ Secure media transfer station
 - ✅ Full PCI DSS compliance
 
+## 🆕 Enhanced Components
+
+We've added enterprise-grade enhancements in the `src/enhancements/` directory:
+
+- **HSM Integration** - Production-ready Hardware Security Module support
+- **Data Retention Manager** - Automated lifecycle management with secure wiping
+- **Incident Response Plan** - Complete procedures for security incidents
+- **Air-Gap Validator** - Automated network isolation verification
+- **Compliance Automation** - Automated PCI DSS compliance checking
+
+See [Enhancement Documentation](src/enhancements/README.md) for details.
+
 ## 🏗️ Architecture
 
 ```
@@ -97,17 +109,22 @@ This system addresses all 12 PCI DSS requirements:
    sudo ./scripts/setup.sh
    ```
 
-2. **Build containers**
+2. **Validate air-gap integrity**
+   ```bash
+   sudo ./src/enhancements/airgap_validator.sh
+   ```
+
+3. **Build containers**
    ```bash
    make build
    ```
 
-3. **Run security validation**
+4. **Run security validation**
    ```bash
    make security-scan
    ```
 
-4. **Deploy**
+5. **Deploy**
    ```bash
    make deploy-prod
    ```
@@ -117,7 +134,13 @@ This system addresses all 12 PCI DSS requirements:
 ```
 .
 ├── src/                    # Core application source
-│   └── pci_backend.py     # Main backend implementation
+│   ├── pci_backend.py     # Main backend implementation
+│   └── enhancements/      # Enterprise enhancements
+│       ├── hsm_integration.py
+│       ├── data_retention_manager.py
+│       ├── incident_response_plan.md
+│       ├── airgap_validator.sh
+│       └── compliance_automation.py
 ├── demo/                   # Demo environment
 │   └── setup_demo.sh      # Automated demo setup
 ├── docker/                 # Container configurations
@@ -142,6 +165,7 @@ This system addresses all 12 PCI DSS requirements:
 - [Deployment Guide](docs/DEPLOYMENT.md)
 - [API Reference](docs/API.md)
 - [Compliance Documentation](docs/COMPLIANCE.md)
+- [Enhancement Guide](src/enhancements/README.md)
 
 ## 🧪 Testing
 
@@ -153,6 +177,11 @@ make test
 Run compliance tests only:
 ```bash
 python -m pytest tests/compliance_tests.py -v
+```
+
+Run automated compliance check:
+```bash
+python src/enhancements/compliance_automation.py --executive-summary
 ```
 
 ## ⚠️ Security Considerations
